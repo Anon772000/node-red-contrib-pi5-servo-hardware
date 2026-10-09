@@ -1,0 +1,47 @@
+{
+  "name": "node-red-contrib-pi5-servo-hardware",
+  "version": "0.3.1",
+  "description": "Raspberry Pi 5 hardware PWM servo, GPIO, DHT and persistent local-control nodes for Node-RED",
+  "license": "MIT",
+  "author": "Anon772000",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Anon772000/node-red-contrib-pi5-servo-hardware.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Anon772000/node-red-contrib-pi5-servo-hardware/issues"
+  },
+  "keywords": [
+    "node-red",
+    "raspberry-pi",
+    "pi5",
+    "servo",
+    "pwm",
+    "gpio"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "node-dht-sensor": "0.5.5"
+  },
+  "scripts": {
+    "test": "node tests/native-servo.cjs && node tests/offline-rules.cjs && node tests/registration.cjs"
+  },
+  "files": [
+    "*.js",
+    "*.cjs",
+    "*.html",
+    "tools/",
+    "examples/",
+    "README.md",
+    "LICENSE"
+  ],
+  "node-red": {
+    "nodes": {
+      "pi5-servo-pwm": "servo-node.js",
+      "site-hardware": "site-nodes.js",
+      "local-rules": "local-rules-node.js"
+    }
+  }
+}

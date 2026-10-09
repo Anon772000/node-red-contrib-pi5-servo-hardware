@@ -1,0 +1,18 @@
+<script type="text/javascript">
+['prepare','gpio','dht','usb-soil'].forEach(function(kind){
+  const titles={prepare:'Apply Site settings',gpio:'Valve GPIO',dht:'DHT sensor','usb-soil':'Heltec USB soil'};
+  RED.nodes.registerType('pi-site-'+kind,{
+    category:'Raspberry Pi',color:'#E9967A',defaults:{name:{value:''},mode:{value:'write'}},
+    inputs:1,outputs:kind==='prepare'?3:1,icon:'font-awesome/fa-microchip',
+    label:function(){return this.name||titles[kind];}
+  });
+});
+</script>
+<script type="text/html" data-template-name="pi-site-prepare"><div class="form-row"><label for="node-input-name">Name</label><input id="node-input-name"></div><p>Validate flow.siteSettings, close the outputs, apply the PWM pin and prepare MQTT. Outputs: connection, subscriptions, start.</p></script>
+<script type="text/html" data-template-name="pi-site-gpio"><div class="form-row"><label for="node-input-name">Name</label><input id="node-input-name"></div><div class="form-row"><label for="node-input-mode">Mode</label><select id="node-input-mode"><option value="write">Set valve and read back</option><option value="read">Read valve only</option></select></div></script>
+<script type="text/html" data-template-name="pi-site-dht"><div class="form-row"><label for="node-input-name">Name</label><input id="node-input-name"></div><p>Read the DHT type and BCM GPIO from flow.siteSettings. Invalid readings are discarded.</p></script>
+<script type="text/html" data-template-name="pi-site-usb-soil"><div class="form-row"><label for="node-input-name">Name</label><input id="node-input-name"></div><p>Start the existing USB reader using the USB serial identity and baud in flow.siteSettings. The Heltec firmware sends a sample every 10 seconds.</p></script>
+<script type="text/html" data-help-name="pi-site-prepare"><p>Edit the single Site settings Change node, Deploy, then click Apply settings. Settings are also applied automatically after startup and deployments. Outputs remain closed if validation fails. GPIO uses BCM numbering; vent pins 12, 13, 18 and 19 support Pi 5 hardware PWM. Servo percentages 0, 50 and 100 correspond to 1, 1.5 and 2 ms pulses.</p></script>
+<script type="text/html" data-help-name="pi-site-gpio"><p>Uses flow.siteSettings.gpio.valve. Write mode accepts 0 or 1, then publishes the actual pinctrl readback. The output is closed when the node stops.</p></script>
+<script type="text/html" data-help-name="pi-site-dht"><p>Uses the existing node-dht-sensor library, in a child process so a slow sensor cannot block valve cutoff or MQTT. The GPIO and sensor type come from Site settings.</p></script>
+<script type="text/html" data-help-name="pi-site-usb-soil"><p>Uses the existing Heltec USB reader with device identity and baud from Site settings. Its reader reconnects when USB is unplugged. Only real XC4604 samples are forwarded.</p></script>

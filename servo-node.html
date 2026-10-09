@@ -1,0 +1,19 @@
+<script type="text/javascript">
+RED.nodes.registerType('pi5-servo-pwm',{
+  category:'Raspberry Pi',color:'#E9967A',defaults:{name:{value:''},mode:{value:'write',required:true},useSettings:{value:false}},
+  inputs:1,outputs:1,icon:'font-awesome/fa-cog',
+  label:function(){return this.name||(this.mode==='read'?'Pi 5 Servo Readback':'Pi 5 Servo PWM');}
+});
+</script>
+<script type="text/html" data-template-name="pi5-servo-pwm">
+  <div class="form-row"><label for="node-input-name"><i class="fa fa-tag"></i> Name</label><input type="text" id="node-input-name"></div>
+  <div class="form-row"><label for="node-input-mode">Mode</label><select id="node-input-mode"><option value="write">Set servo position</option><option value="read">Read actual PWM</option></select></div>
+  <div class="form-row"><label for="node-input-useSettings">Site settings</label><input type="checkbox" id="node-input-useSettings" style="width:auto"> Use flow.siteSettings</div>
+  <p>50Hz hardware PWM. Site settings select BCM12, 13, 18 or 19; otherwise GPIO18 is used.</p>
+</script>
+<script type="text/html" data-help-name="pi5-servo-pwm">
+  <p>A local custom node for Pi 5 RP1 PWM0. Site settings select the vent GPIO and the matching hardware channel.</p>
+  <p>Set mode accepts a numeric <code>msg.payload</code> from0 to100: 0=1ms, 50=1.5ms, 100=2ms. Read mode reads the kernel PWM configuration without changing the output.</p>
+  <p>The output contains the live pulse width, corresponding0–100 position, GPIO and frequency. Readback describes the electrical PWM setting. It does not measure mechanical position.</p>
+  <p>Requires the Site 1 PWM boot setup and gpio-group permissions. No Python commands are used.</p>
+</script>
