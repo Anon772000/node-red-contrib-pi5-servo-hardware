@@ -1,7 +1,7 @@
 {
   "name": "node-red-contrib-pi5-servo-hardware",
-  "version": "0.3.1",
-  "description": "Raspberry Pi 5 hardware PWM servo, GPIO, DHT and persistent local-control nodes for Node-RED",
+  "version": "0.5.0",
+  "description": "Raspberry Pi 5 PWM servo, GPIO, DHT, MCP3008 and I2C soil nodes with persistent local control for Node-RED",
   "license": "MIT",
   "author": "Anon772000",
   "repository": {
@@ -23,17 +23,18 @@
     "node": ">=20"
   },
   "dependencies": {
-    "node-dht-sensor": "0.5.5"
+    "node-dht-sensor": "0.5.5",
+    "spi-device": "3.1.2",
+    "i2c-bus": "5.2.3"
   },
   "scripts": {
-    "test": "node tests/native-servo.cjs && node tests/offline-rules.cjs && node tests/registration.cjs"
+    "test": "node tests/native-servo.cjs && node tests/offline-rules.cjs && node tests/registration.cjs && node tests/mcp3008-soil.cjs && node tests/seesaw-soil.cjs"
   },
   "files": [
     "*.js",
     "*.cjs",
     "*.html",
     "tools/",
-    "examples/",
     "README.md",
     "LICENSE"
   ],
@@ -41,7 +42,9 @@
     "nodes": {
       "pi5-servo-pwm": "servo-node.js",
       "site-hardware": "site-nodes.js",
-      "local-rules": "local-rules-node.js"
+      "local-rules": "local-rules-node.js",
+      "seesaw-soil": "seesaw-node.js",
+      "mcp3008-soil": "mcp3008-node.js"
     }
   }
 }

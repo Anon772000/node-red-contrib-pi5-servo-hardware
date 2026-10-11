@@ -27,7 +27,7 @@ module.exports=function(RED) {
           require('./hardware').createDriver({gpio:old.gpio.vent}).set(old.servo.closedPercent);
         }
         s=validate(candidate);
-        if(s.mqtt.tls){fs.mkdirSync(path.dirname(CA_PATH),{recursive:true});fs.writeFileSync(CA_PATH,s.mqtt.caPem,{mode:0o600});}
+        if(s.mqtt.tls){fs.mkdirSync(path.dirname(CA_PATH),{recursive:true});fs.writeFileSync(CA_PATH,s.mqtt.caPem,{mode:0o600});fs.writeFileSync(path.join(RED.settings.userDir,'certs','site-settings-ca.crt'),s.mqtt.caPem,{mode:0o600});}
         execFileSync('pinctrl',['set',String(s.gpio.valve),'op','dl'],{timeout:1000});
       }catch(e){failure(node,e,msg,done);return;}
       busy=true;

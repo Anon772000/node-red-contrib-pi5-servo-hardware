@@ -1,0 +1,5 @@
+<script type="text/javascript">
+RED.nodes.registerType('pi-site-seesaw-soil',{category:'Raspberry Pi',color:'#E9967A',defaults:{name:{value:''}},inputs:1,outputs:1,icon:'font-awesome/fa-leaf',label:function(){return this.name||'Adafruit STEMMA I2C soil';}});
+</script>
+<script type="text/html" data-template-name="pi-site-seesaw-soil"><div class="form-row"><label for="node-input-name">Name</label><input id="node-input-name"></div><p>Read the Adafruit STEMMA capacitive soil sensor on I2C bus 1. Bus, address and calibration come from the single Site settings Change node.</p></script>
+<script type="text/html" data-help-name="pi-site-seesaw-soil"><p>Accepts <code>msg.action = "read"</code>. Outputs the real raw capacitance as <code>msg.payload.soilRaw</code>. Uses the seesaw channel-0 protocol, checks the sensor identity and rejects invalid or incomplete readings.</p><p>Enable I2C before use. Wire VIN to 3.3 V, GND to ground, SDA to GPIO2/pin3 and SCL to GPIO3/pin5. The default address is 0x36 (54 in decimal). Record dry and wet calibration readings before clearing the estimated flag.</p></script>

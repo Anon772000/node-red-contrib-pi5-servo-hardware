@@ -20,10 +20,10 @@ for command_name in pinctrl dtoverlay visudo getent systemctl; do
   command -v "$command_name" >/dev/null || { echo "Missing prerequisite: $command_name" >&2; exit 1; }
 done
 tools_dir="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
-for group_name in gpio dialout; do
+for group_name in gpio dialout spi i2c; do
   getent group "$group_name" >/dev/null || groupadd --system "$group_name"
 done
-usermod -aG gpio,dialout "$node_red_user"
+usermod -aG gpio,dialout,spi,i2c "$node_red_user"
 install -o root -g root -m 0755 "$tools_dir/pi5-servo-pwm-setup.cjs" /usr/local/lib/pi5-servo-pwm-setup.cjs
 install -o root -g root -m 0644 "$tools_dir/pi5-servo-pwm.service" /etc/systemd/system/pi5-servo-pwm.service
 

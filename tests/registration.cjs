@@ -2,12 +2,12 @@
 const assert=require('node:assert/strict'),fs=require('node:fs'),os=require('node:os'),path=require('node:path');
 const types=new Map();
 const RED={settings:{userDir:path.join(os.tmpdir(),'node-red-plugin-test')},nodes:{registerType:(name,constructor)=>types.set(name,constructor)}};
-for(const modulePath of ['../servo-node','../site-nodes','../local-rules-node'])require(modulePath)(RED);
-assert.deepEqual([...types.keys()].sort(),['pi-site-dht','pi-site-gpio','pi-site-local-rules','pi-site-prepare','pi-site-usb-soil','pi5-servo-pwm'].sort());
+for(const modulePath of ['../servo-node','../site-nodes','../local-rules-node','../seesaw-node','../mcp3008-node'])require(modulePath)(RED);
+assert.deepEqual([...types.keys()].sort(),['pi-site-dht','pi-site-gpio','pi-site-local-rules','pi-site-prepare','pi-site-usb-soil','pi5-servo-pwm','pi-site-seesaw-soil','pi-site-mcp3008-soil'].sort());
 const source=fs.readFileSync(path.join(__dirname,'../site-nodes.js'),'utf8');
 assert.ok(source.includes("path.join(RED.settings.userDir,'certs','pi5-servo-ca.crt')"),'CA certificate follows the Node-RED user directory');
 assert.ok(source.includes("path.join(__dirname,'tools','heltec-soil-reader.py')"),'USB reader is included in the package');
 assert.ok(source.includes('/usr/local/lib/pi5-servo-pwm-setup.cjs'),'PWM helper matches the installer');
 assert.ok(!/\/home\/[^/]+\/\.node-red/.test(source),'No fixed Linux username');
 for(const file of ['pi5-servo-pwm-setup.cjs','heltec-soil-reader.py','install-pwm.sh','pi5-servo-pwm.service'])assert.ok(fs.existsSync(path.join(__dirname,'../tools',file)));
-console.log('PASS: six palette nodes register and all external helpers are included at matching paths.');
+console.log('PASS: eight palette nodes register and all external helpers are included at matching paths.');
